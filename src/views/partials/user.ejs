@@ -1,0 +1,20 @@
+<% if (!user) return; %>
+<li class="col s12 m6">
+  <form class="card blue-grey darken-1 white-text" method="POST">
+    <div class="card-content">
+      <span class="card-title"><%- user.login %></span>
+      <p>Age: <%- user.age %></p>
+    </div>
+    <div class="card-action">
+      <span>ID: <%- user.id %></span>
+    </div>
+    <div class="card-content row">
+      <a href="/users/<%- user.id %>" class="btn col s4">Update
+        <i class="material-icons left">cached</i>
+      </a>
+      <button type="submit" class="btn col s4 offset-s4" name="delete" value="<%- user.id %>">Delete
+        <i class="material-icons left">clear</i>
+      </button>
+    </div>
+  </form>
+</li>
