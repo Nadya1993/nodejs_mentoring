@@ -1,7 +1,7 @@
 import express from 'express';
-import { UserManager } from '../../utils/generateUsers';
+import { UserManager } from '../models/UserModel';
 import { UserRes } from '../types';
-import { schema, reduceErrorResponse } from '../../utils/validation';
+import { schema, reduceErrorResponse } from '../utils/userValidation';
 
 const router = express.Router();
 const userManager = new UserManager(100);
