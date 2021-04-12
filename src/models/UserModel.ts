@@ -95,3 +95,5 @@ export class UserManager {
     return suggestionList;
   }
 }
+
+export const userManagerInstance = new UserManager(5);
