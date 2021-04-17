@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/header'); %>
+
+<body>
+  <div class="container">
+    <h1 class="header">All Users</h1>
+    <a class="btn collection-item" href="/"><i class="material-icons left">arrow_back</i>Go Home</a>
+
+    <% if (locals.users) { %>
+      <ul class="collection row">
+        <%- include('partials/createUserCard'); %>
+        <% locals.users.forEach(function(user) { %>
+          <%- include('partials/user', { user: user }); %>
+        <% }); %>
+      </ul>
+    <% } else {%>
+      <h2 class="header">No users were found</h2>
+    <% } %>
+    </div>
+</body>
+
+</html>
