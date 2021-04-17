@@ -58,8 +58,7 @@ router.use('/:id', (req: express.Request, res: UserRes, next: express.NextFuncti
   const { error } = schema.validate({ login, password, age });
 
   if (error?.isJoi) {
-    res.status(400).json(reduceErrorResponse(error.details));
-    return;
+    return res.status(400).json(reduceErrorResponse(error.details));
   }
 
   next();
