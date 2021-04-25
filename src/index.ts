@@ -1,8 +1,7 @@
 import path from 'path';
 import dotenv from 'dotenv';
 import express from 'express';
-import router from './routes';
-import userRouter from './routes/userRoutes';
+import { suggestionRoutes, userRoutes } from './routers';
 
 dotenv.config();
 
@@ -17,8 +16,8 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', router);
-app.use('/users', userRouter);
+app.use('/', suggestionRoutes);
+app.use('/users', userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost: ${PORT}`);
