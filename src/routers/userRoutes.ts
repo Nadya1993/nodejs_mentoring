@@ -1,11 +1,9 @@
 import express from 'express';
-import { UserService } from '../services/UserService';
+import { UserServiceInstance } from '../services/UserService';
 import { UserRes } from '../types';
 import { schema, reduceErrorResponse } from '../utils/userValidation';
-import { UserModel } from '../models/UserModel';
 
 const router = express.Router();
-const UserServiceInstance = new UserService(UserModel);
 
 // find all visible users
 router.get('/', async (req: express.Request, res: express.Response) => {

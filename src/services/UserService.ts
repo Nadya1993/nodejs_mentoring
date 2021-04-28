@@ -1,8 +1,9 @@
 import { ModelCtor, Op } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
+import { UserModel } from '../models/UserModel';
 import { UserAttributes, UserInstance } from '../types';
 
-export class UserService {
+class UserService {
   private userModel: ModelCtor<UserInstance>;
 
   constructor (userModel: ModelCtor<UserInstance>) {
@@ -54,3 +55,5 @@ export class UserService {
     })
   )
 }
+
+export const UserServiceInstance = new UserService(UserModel);

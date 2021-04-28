@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 import { Sequelize } from 'sequelize';
 
-const connectionString = 'postgres://bqgqthbd:9gOdo8uMOO6yQFufa-ypy2bFDW3SgeXz@dumbo.db.elephantsql.com:5432/bqgqthbd';
+const connectionString = process.env.CONNECTION_STRING;
 
 export const sequelize = new Sequelize(connectionString);
 export const pg = new Client(connectionString);
