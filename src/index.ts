@@ -1,6 +1,6 @@
 import path from 'path';
 import express from 'express';
-import { suggestionRoutes, userRoutes } from './routers';
+import { userRoutes, groupRoutes } from './routers';
 
 const PORT = process.env.SERVER_PORT;
 
@@ -13,8 +13,8 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', suggestionRoutes);
 app.use('/users', userRoutes);
+app.use('/groups', groupRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost: ${PORT}`);

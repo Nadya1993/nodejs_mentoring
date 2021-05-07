@@ -5,7 +5,7 @@ import { UserInstance } from '../types';
 export const UserModel = sequelize.define<UserInstance>('user', {
   userId: {
     primaryKey: true,
-    type: DataTypes.STRING
+    type: DataTypes.UUIDV4
   },
   login: {
     type: DataTypes.STRING,
