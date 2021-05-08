@@ -1,6 +1,7 @@
 import { ModelCtor } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
 import { GroupModel } from '../models/GroupModel';
+import { UserModel } from '../models/UserModel';
 import { GroupAttributes, GroupInstance, Permission } from '../types';
 
 class GroupService {
@@ -12,7 +13,8 @@ class GroupService {
 
   getGroups = async (): Promise<GroupAttributes[]> => (
     await this.groupModel.findAll({
-      attributes: ['name', 'permission', 'group_id']
+      attributes: ['name', 'permission', 'group_id'],
+      include: UserModel
     })
   )
 

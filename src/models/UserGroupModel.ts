@@ -25,5 +25,5 @@ export const UserGroupModel = sequelize.define<UserGroupInstance>('user_groups',
   underscored: true
 });
 
-UserModel.belongsToMany(GroupModel, { through: UserGroupModel });
-GroupModel.belongsToMany(UserModel, { through: UserGroupModel });
+UserModel.belongsToMany(GroupModel, { through: UserGroupModel, foreignKey: 'group_id' });
+GroupModel.belongsToMany(UserModel, { through: UserGroupModel, foreignKey: 'user_id' });
