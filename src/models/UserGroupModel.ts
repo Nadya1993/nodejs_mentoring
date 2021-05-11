@@ -5,7 +5,7 @@ import { GroupModel } from './GroupModel';
 import { UserModel } from './UserModel';
 
 export const UserGroupModel = sequelize.define<UserGroupInstance>('user_groups', {
-  userId: {
+  userUserId: {
     type: DataTypes.UUIDV4,
     allowNull: false,
     references: {
@@ -13,7 +13,7 @@ export const UserGroupModel = sequelize.define<UserGroupInstance>('user_groups',
       key: 'user_id'
     }
   },
-  groupId: {
+  groupGroupId: {
     type: DataTypes.UUIDV4,
     allowNull: false,
     references: {
@@ -25,5 +25,5 @@ export const UserGroupModel = sequelize.define<UserGroupInstance>('user_groups',
   underscored: true
 });
 
-UserModel.belongsToMany(GroupModel, { through: UserGroupModel, foreignKey: 'group_id' });
-GroupModel.belongsToMany(UserModel, { through: UserGroupModel, foreignKey: 'user_id' });
+UserModel.belongsToMany(GroupModel, { through: UserGroupModel });
+GroupModel.belongsToMany(UserModel, { through: UserGroupModel });

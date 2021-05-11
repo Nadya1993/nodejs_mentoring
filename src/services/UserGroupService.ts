@@ -1,6 +1,5 @@
 import { ModelCtor } from 'sequelize';
 import { sequelize } from '../data-access/properties';
-import { GroupModel } from '../models/GroupModel';
 import { UserGroupModel } from '../models/UserGroupModel';
 import { UserGroupInstance } from '../types';
 
@@ -11,14 +10,15 @@ class UserGroupService {
     this.userGroupModel = userGroupModel;
   }
 
-  addUsersToGroup = async (groupId: string, userIds: string[]): Promise<UserGroupInstance[] | void> => {
+  addUsersToGroup = async (groupGroupId: string, userIds: string[]): Promise<UserGroupInstance[] | void> => {
     try {
       return await sequelize.transaction(async (transaction) => {
-        const connections = userIds.map((userId) => ({
-          groupId,
-          userId
+        const connections = userIds.map((userUserId) => ({
+          groupGroupId,
+          userUserId
         }));
-        return await UserGroupModel.bulkCreate(connections, { transaction });
+
+        return await this.userGroupModel.bulkCreate(connections, { transaction });
       });
     } catch (error) {
       console.log('Could not commit transaction', error);

@@ -1,5 +1,4 @@
 import express from 'express';
-import { nextTick } from 'node:process';
 import { UserServiceInstance } from '../services/UserService';
 import { UserRes } from '../types';
 import { schema, reduceErrorResponse } from '../utils/userValidation';
@@ -12,7 +11,7 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 // delete user by id
-router.post('/', async (req: express.Request, res: express.Response) => {
+router.delete('/', async (req: express.Request, res: express.Response) => {
   const isUserDeleted = await UserServiceInstance.deleteUser(req.body.delete);
   if (isUserDeleted) {
     res.sendStatus(200);

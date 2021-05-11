@@ -19,9 +19,9 @@ class GroupService {
   )
 
   findGroup = async (id: string): Promise<GroupAttributes | undefined> => (
-    await (await this.groupModel.findByPk(id, {
+    await this.groupModel.findByPk(id, {
       attributes: ['name', 'permission', 'group_id']
-    }))
+    })
   )
 
   addGroup = async (name: string, permission: Permission[]): Promise<GroupInstance> => (

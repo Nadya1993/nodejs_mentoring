@@ -10,7 +10,7 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 // delete group by id
-router.post('/', async (req: express.Request, res: express.Response) => {
+router.delete('/', async (req: express.Request, res: express.Response) => {
   const isGroupDeleted = await GroupServiceInstance.deleteGroup(req.body.delete);
   if (isGroupDeleted) {
     res.sendStatus(200);

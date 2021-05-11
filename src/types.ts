@@ -39,8 +39,8 @@ export type GroupRes = express.Response & {
 };
 
 export interface UserGroupAttributes {
-  userId: string;
-  groupId: string;
+  userUserId: string;
+  groupGroupId: string;
 }
 
 export interface UserGroupInstance
