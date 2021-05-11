@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
-  "type": "module",
   "scripts": {
-    "dev": "nodemon -r dotenv/config  --exec babel-node src/index.ts --extensions \".ts, .tsx\"",
+    "dev": "nodemon -r dotenv/config --exec babel-node src/index.ts --extensions \".ts, .tsx\"",
     "clean": "rimraf build/*",
     "lint": "tslint -c tslint.json -p tsconfig.json --fix",
     "compact": "babel src --out-dir build --extensions \".ts, .tsx\"",
     "copy-assets": "ts-node tools/copyAssets",
     "build": "npm-run-all clean lint compact copy-assets",
-    "createInitialTable": "babel-node src/data-access/ddl/createInitialTable.ts --extensions \".ts, .tsx\"",
+    "createUserTable": "babel-node -r dotenv/config src/data-access/ddl/createUserTable.ts --extensions \".ts\"",
+    "createGroupsTable": "babel-node -r dotenv/config src/data-access/ddl/createGroupsTable.ts --extensions \".ts\"",
+    "createUserGroupTable": "babel-node -r dotenv/config src/data-access/ddl/createUserGroupTable.ts --extensions \".ts\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

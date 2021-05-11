@@ -2,9 +2,9 @@ import { UserModel } from '../../models/UserModel';
 import { generateUsers } from '../../utils/generateUsers';
 import { connectSequelize, pg } from '../properties';
 
-const createInitialTable = async (qty: number) => {
+const createUserTable = async (qty: number) => {
   await pg.connect();
-  await pg.query('DROP TABLE users;');
+  await pg.query('DROP TABLE IF EXISTS users;');
   await pg.query(`CREATE TABLE users (
     user_id varchar(40) PRIMARY KEY,
     login varchar(40) NOT NULL,
@@ -23,4 +23,4 @@ const createInitialTable = async (qty: number) => {
   });
 }
 
-createInitialTable(7);
+createUserTable(7);

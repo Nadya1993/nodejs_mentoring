@@ -11,7 +11,7 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 // delete user by id
-router.post('/', async (req: express.Request, res: express.Response) => {
+router.delete('/', async (req: express.Request, res: express.Response) => {
   const isUserDeleted = await UserServiceInstance.deleteUser(req.body.delete);
   if (isUserDeleted) {
     res.sendStatus(200);
@@ -22,7 +22,7 @@ router.post('/', async (req: express.Request, res: express.Response) => {
 
 // find user by id
 router.get('/search', async (req: express.Request, res: express.Response) => {
-  const userId = String(req.query.user_id);
+  const userId = String(req.query.id);
   const requestedUser = await UserServiceInstance.findUser(userId);
   const notFound = userId && !requestedUser;
   if (notFound) {
@@ -32,18 +32,31 @@ router.get('/search', async (req: express.Request, res: express.Response) => {
   res.json(requestedUser);
 });
 
-// create user
-router.put('/create', async (req: express.Request, res: express.Response) => {
-  const { login, password, age } = req.body;
+// get list of suggestions
+router.get('/getSuggestionList', async (req: express.Request, res: express.Response) => {
+  const { limit, loginSubstring } = req.query;
+  const suggestionList = await UserServiceInstance.getSuggestionList(Number(limit), String(loginSubstring));
 
+  res.json(suggestionList);
+});
+
+// create user
+router.use('/create', async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const { login, password, age } = req.body;
   const { error } = schema.validate({ login, password, age });
 
   if (error?.isJoi) {
-    res.status(400).json(reduceErrorResponse(error.details));
-  } else {
-    await UserServiceInstance.addUser(String(login), String(password), Number(age));
-    res.sendStatus(200);
+    return res.status(400).json(reduceErrorResponse(error.details));
   }
+
+  next();
+});
+
+router.put('/create', async (req: express.Request, res: express.Response) => {
+  const { login, password, age } = req.body;
+
+  await UserServiceInstance.addUser(String(login), String(password), Number(age));
+  res.sendStatus(200);
 });
 
 // update user
