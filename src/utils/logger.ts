@@ -49,3 +49,29 @@ export const logInfo = (logger: winston.Logger) =>
       params: params && getVariableName(params)
     })
   }
+
+export const logError = (logger: winston.Logger) =>
+  (err: express.ErrorRequestHandler, req: express.Request, res: express.Response) => {
+    const { params } = res.locals;
+    logger.error({
+      method: res.locals.method,
+      params: params && getVariableName(params),
+      error: err
+    })
+    res.status(500).send('Something broken!')
+  }
+
+process.on('uncaughtException', (exception: express.ErrorRequestHandler, origin: string) => {
+  BaseLogger.error({
+    type: 'uncaughtException',
+    exception,
+    origin
+  })
+});
+
+process.on('unhandledRejection', exception => {
+  BaseLogger.error({
+    type: 'unhandledRejection',
+    exception
+  })
+});
