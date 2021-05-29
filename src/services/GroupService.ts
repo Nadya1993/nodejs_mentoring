@@ -11,38 +11,52 @@ class GroupService {
     this.groupModel = groupModel;
   }
 
-  getGroups = async (): Promise<GroupAttributes[]> => (
-    await this.groupModel.findAll({
-      attributes: ['name', 'permission', 'group_id'],
-      include: UserModel
-    })
-  )
+  async getGroups (): Promise<GroupAttributes[]> {
+    return (
+      await this.groupModel.findAll({
+        attributes: ['name', 'permission', 'group_id'],
+        include: UserModel
+      })
+    )
+  }
 
-  findGroup = async (id: string): Promise<GroupAttributes | undefined> => (
-    await this.groupModel.findByPk(id, {
-      attributes: ['name', 'permission', 'group_id']
-    })
-  )
+  async findGroup (id: string): Promise<GroupAttributes | undefined> {
+    return (
+      await this.groupModel.findByPk(id, {
+        attributes: ['name', 'permission', 'group_id']
+      })
+    )
+  }
 
-  addGroup = async (name: string, permission: Permission[]): Promise<GroupInstance> => (
-    await this.groupModel.create({ groupId: uuidv4(), name, permission })
-  )
+  async addGroup (name: string, permission: Permission[]): Promise<GroupInstance> {
+    return (
+      await this.groupModel.create({ groupId: uuidv4(), name, permission })
+    )
+  }
 
-  deleteGroup = async (groupId: string): Promise<number> => (
-    await this.groupModel.destroy({
-      where: {
-        groupId
-      }
-    })
-  )
+  async deleteGroup (groupId: string): Promise<number> {
+    return (
+      await this.groupModel.destroy({
+        where: {
+          groupId
+        }
+      })
+    )
+  }
 
-  updateGroup = async ({ groupId, name, permission }: GroupAttributes): Promise<[number, GroupInstance[]]> => (
-    await this.groupModel.update({ name, permission }, {
-      where: {
-        groupId
-      }
-    })
-  )
+  async updateGroup ({
+    groupId,
+    name,
+    permission
+  }: GroupAttributes): Promise<[number, GroupInstance[]]> {
+    return (
+      await this.groupModel.update({ name, permission }, {
+        where: {
+          groupId
+        }
+      })
+    )
+  }
 }
 
 export const GroupServiceInstance = new GroupService(GroupModel);

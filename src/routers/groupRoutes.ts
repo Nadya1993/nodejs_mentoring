@@ -1,59 +1,23 @@
 import express from 'express';
-import { GroupServiceInstance } from '../services/GroupService';
-import { GroupRes } from '../types';
+import { addGroup, deleteGroupById, findAllGroups, findGroupById, provideFoundGroup, updateGroup } from './controllers/groupControllers';
 
 const router = express.Router();
 
 // find all groups
-router.get('/', async (req: express.Request, res: express.Response) => {
-  res.json(await GroupServiceInstance.getGroups());
-});
+router.get('/', findAllGroups);
 
 // delete group by id
-router.delete('/', async (req: express.Request, res: express.Response) => {
-  const isGroupDeleted = await GroupServiceInstance.deleteGroup(req.body.delete);
-  if (isGroupDeleted) {
-    res.sendStatus(200);
-  } else {
-    res.status(404).json('Group was not found');
-  }
-});
+router.delete('/', deleteGroupById);
 
 // find group by id
-router.get('/search', async (req: express.Request, res: express.Response) => {
-  const groupId = String(req.query.id);
-  const requestedGroup = await GroupServiceInstance.findGroup(groupId);
-  const notFound = groupId && !requestedGroup;
-  if (notFound) {
-    res.status(404).json('Group was not found');
-    return;
-  }
-  res.json(requestedGroup);
-});
+router.param('id', findGroupById);
 
-router.put('/create', async (req: express.Request, res: express.Response) => {
-  const { name, permission } = req.body;
+router.get('/search/:id', provideFoundGroup);
 
-  await GroupServiceInstance.addGroup(String(name), permission);
-  res.sendStatus(200);
-});
+// create group
+router.put('/create', addGroup);
 
 // update group
-router.param('id', async (req: express.Request, res: GroupRes, next: express.NextFunction, groupId: string) => {
-  const requestedGroup = await GroupServiceInstance.findGroup(groupId);
-  res.group = requestedGroup;
-  next();
-});
-
-router.post('/:id', async (req: express.Request, res: GroupRes) => {
-  const { name, permission } = req.body;
-  const { id } = req.params;
-  await GroupServiceInstance.updateGroup({
-    groupId: id,
-    name: String(name),
-    permission
-  });
-  res.sendStatus(200);
-});
+router.post('update/:id', updateGroup);
 
 export default router;

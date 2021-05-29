@@ -1,4 +1,3 @@
-import express from 'express';
 import { Model } from 'sequelize';
 
 export interface UserAttributes {
@@ -11,10 +10,6 @@ export interface UserAttributes {
 export interface UserInstance
   extends Model<UserAttributes>,
     UserAttributes {}
-
-export type UserRes = express.Response & {
-  user: UserAttributes;
-};
 
 export enum Permission {
   Read = 'READ',
@@ -34,10 +29,6 @@ export interface GroupInstance
 extends Model<GroupAttributes>,
 GroupAttributes {}
 
-export type GroupRes = express.Response & {
-  group: GroupAttributes;
-};
-
 export interface UserGroupAttributes {
   userUserId: string;
   groupGroupId: string;
@@ -46,3 +37,10 @@ export interface UserGroupAttributes {
 export interface UserGroupInstance
   extends Model<UserGroupAttributes>,
     UserGroupAttributes {}
+
+export enum severityLevel {
+  debug = 'debug',
+  info = 'info',
+  warn = 'warn',
+  error = 'error',
+};
