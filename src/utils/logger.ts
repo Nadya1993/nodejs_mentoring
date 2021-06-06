@@ -51,14 +51,14 @@ export const logInfo = (logger: winston.Logger) =>
   }
 
 export const logError = (logger: winston.Logger) =>
-  (err: express.ErrorRequestHandler, req: express.Request, res: express.Response) => {
+  (error: express.ErrorRequestHandler, req: express.Request, res: express.Response, next: express.NextFunction) => {
     const { params } = res.locals;
     logger.error({
       method: res.locals.method,
       params: params && getVariableName(params),
-      error: err
+      error
     })
-    res.status(500).send('Something broken!')
+    res.status(500).send(error)
   }
 
 process.on('uncaughtException', (exception: express.ErrorRequestHandler, origin: string) => {

@@ -26,6 +26,14 @@ class UserService {
     )
   }
 
+  async findUserByLogin (login: string): Promise<UserAttributes | undefined> {
+    return (
+      await (await this.userModel.findOne({
+        where: { login }
+      }))
+    )
+  }
+
   async addUser (login: string, password: string, age: number): Promise<UserInstance> {
     return (
       await this.userModel.create({ userId: uuidv4(), login, password, age })
