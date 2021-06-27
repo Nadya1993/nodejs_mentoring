@@ -1,4 +1,5 @@
 import express from 'express';
+import { LIMIT_NOT_PASSED, LOGIN_SUBSTRING_NOT_PASSED, USER_ID_NOT_PASSED, USER_NOT_FOUND } from '../../locale';
 import { UserServiceInstance } from '../../services/UserService';
 import { reduceErrorResponse, schema } from '../../utils/userValidation';
 
@@ -10,13 +11,17 @@ export const getAllUsers = async (req: express.Request, res: express.Response, n
 
 export const deletUserById = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const removalId = req.body.delete;
+  if (!removalId) {
+    res.status(400).json(USER_ID_NOT_PASSED);
+    return next();
+  }
   const isUserDeleted = await UserServiceInstance.deleteUser(removalId);
   if (isUserDeleted) {
     res.sendStatus(200);
     res.locals.method = UserServiceInstance.deleteUser.name;
     res.locals.params = { removalId };
   } else {
-    res.status(404).json('User was not found');
+    res.status(404).json(USER_NOT_FOUND);
   }
   next();
 }
@@ -26,7 +31,7 @@ export const findUserById = async (req: express.Request, res: express.Response, 
   const notFound = userId && !requestedUser;
 
   if (notFound) {
-    res.status(404).json('User was not found');
+    res.status(404).json(USER_NOT_FOUND);
     return;
   }
 
@@ -44,6 +49,17 @@ export const provideFoundUser = async (req: express.Request, res: express.Respon
 
 export const getSuggestionList = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { limit, loginSubstring } = req.query;
+
+  if (!limit) {
+    res.status(400).json(LIMIT_NOT_PASSED);
+    return next();
+  }
+
+  if (!loginSubstring) {
+    res.status(400).json(LOGIN_SUBSTRING_NOT_PASSED);
+    return next();
+  }
+
   const suggestionList = await UserServiceInstance.getSuggestionList(Number(limit), String(loginSubstring));
 
   res.json(suggestionList);
@@ -78,9 +94,9 @@ export const updateUser = async (req: express.Request, res: express.Response, ne
   const { id } = req.params;
   await UserServiceInstance.updateUser({
     userId: id,
-    login: login,
-    password: password,
-    age: Number(age)
+    login,
+    password,
+    age: Number(age),
   });
   res.sendStatus(200);
   res.locals.method = UserServiceInstance.updateUser.name;

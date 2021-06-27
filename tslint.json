@@ -9,9 +9,7 @@
     }
   },
   "rules": {
-    "trailing-comma": [
-      true
-    ],
+    "trailing-comma": true,
     "no-console": {
       "severity": "warning"
     }

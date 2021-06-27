@@ -7,7 +7,7 @@ export const schema = Joi.object({
     .integer()
     .min(4)
     .max(130)
-    .required()
+    .required(),
 })
 
 export const reduceErrorResponse = (errorSchema: Joi.ValidationErrorItem[]) => {

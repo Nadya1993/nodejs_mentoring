@@ -9,7 +9,7 @@ export const generateUsers = (qty: number): UserAttributes[] => (
     password: faker.lorem.word(7),
     age: faker.datatype.number({
       min: 18,
-      max: 99
-    })
+      max: 99,
+    }),
   }))
 );

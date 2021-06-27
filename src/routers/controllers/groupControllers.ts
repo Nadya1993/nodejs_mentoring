@@ -56,8 +56,8 @@ export const updateGroup = async (req: express.Request, res: express.Response, n
   const { id } = req.params;
   await GroupServiceInstance.updateGroup({
     groupId: id,
-    name: name,
-    permission
+    name,
+    permission,
   });
   res.sendStatus(200);
   res.locals.method = GroupServiceInstance.updateGroup.name;
