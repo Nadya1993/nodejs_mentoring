@@ -11,7 +11,6 @@ router.delete('/', deletUserById)
 
 // find user by id
 router.param('id', findUserById);
-
 router.get('/search/:id', provideFoundUser);
 
 // get list of suggestions

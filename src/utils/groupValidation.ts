@@ -1,13 +1,8 @@
 import Joi from 'joi';
 
 export const schema = Joi.object({
-  login: Joi.string().required(),
-  password: Joi.string().pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{3,10}$/).required(),
-  age: Joi.number()
-    .integer()
-    .min(4)
-    .max(130)
-    .required(),
+  name: Joi.string().required(),
+  permission: Joi.array().items(Joi.string()).required(),
 })
 
 export const reduceErrorResponse = (errorSchema: Joi.ValidationErrorItem[]) => {

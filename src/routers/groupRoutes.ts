@@ -1,5 +1,5 @@
 import express from 'express';
-import { addGroup, deleteGroupById, findAllGroups, findGroupById, provideFoundGroup, updateGroup } from './controllers/groupControllers';
+import { addGroup, deleteGroupById, findAllGroups, findGroupById, provideFoundGroup, updateGroup, validateGroup } from './controllers/groupControllers';
 
 const router = express.Router();
 
@@ -11,13 +11,16 @@ router.delete('/', deleteGroupById);
 
 // find group by id
 router.param('id', findGroupById);
-
 router.get('/search/:id', provideFoundGroup);
 
 // create group
-router.put('/create', addGroup);
+router
+  .use('/create', validateGroup)
+  .put('/create', addGroup);
 
 // update group
-router.post('update/:id', updateGroup);
+router
+  .use('/update/:id', validateGroup)
+  .post('/update/:id', updateGroup);
 
 export default router;

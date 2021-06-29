@@ -13,24 +13,24 @@ class UserService {
   async getUsers (): Promise<UserAttributes[]> {
     return (
       await this.userModel.findAll({
-        attributes: ['login', 'password', 'age', 'user_id']
+        attributes: ['login', 'password', 'age', 'user_id'],
       })
     )
   }
 
   async findUser (userId: string): Promise<UserAttributes | undefined> {
     return (
-      await (await this.userModel.findByPk(userId, {
-        attributes: ['login', 'password', 'age', 'user_id']
-      }))
+      await this.userModel.findByPk(userId, {
+        attributes: ['login', 'password', 'age', 'user_id'],
+      })
     )
   }
 
   async findUserByLogin (login: string): Promise<UserAttributes | undefined> {
     return (
-      await (await this.userModel.findOne({
-        where: { login }
-      }))
+      await this.userModel.findOne({
+        where: { login },
+      })
     )
   }
 
@@ -44,8 +44,8 @@ class UserService {
     return (
       await this.userModel.destroy({
         where: {
-          userId
-        }
+          userId,
+        },
       })
     )
   }
@@ -54,8 +54,8 @@ class UserService {
     return (
       await this.userModel.update({ login, password, age }, {
         where: {
-          userId
-        }
+          userId,
+        },
       })
     )
   }
@@ -66,11 +66,11 @@ class UserService {
         attributes: ['login', 'password', 'age', 'user_id'],
         where: {
           login: {
-            [Op.like]: `${loginSubstring}%`
-          }
+            [Op.like]: `${loginSubstring}%`,
+          },
         },
         order: ['login'],
-        limit
+        limit,
       })
     )
   }
